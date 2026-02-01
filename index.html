@@ -111,9 +111,15 @@ button {
   <p>You just made my world brighter. Thank you for being you. ❤️</p>
 </div>
 
-<audio autoplay loop>
-  <source src="https://www.bensound.com/bensound-music/bensound-love.mp3" type="audio/mp3">
+<audio id="bgMusic" loop>
+  <source src="love.mp3" type="audio/mp3">
 </audio>
+
+<button onclick="document.getElementById('bgMusic').play()" 
+style="position:fixed;bottom:20px;right:20px;padding:10px 15px;border:none;border-radius:8px;background:#ff4d6d;color:white;cursor:pointer;">
+Play Music 🎵
+</button>
+
 
 <script>
 const noBtn = document.getElementById("noBtn");
