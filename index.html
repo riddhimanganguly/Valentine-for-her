@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Be My Valentine 💖</title>
+
+<style>
+body {
+  margin: 0;
+  overflow: hidden;
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(135deg, #ff758c, #ff7eb3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  color: white;
+}
+
+.container {
+  text-align: center;
+  z-index: 10;
+}
+
+h1 {
+  font-size: 3rem;
+  margin-bottom: 20px;
+}
+
+button {
+  padding: 12px 25px;
+  font-size: 1.2rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  position: absolute;
+  transition: all 0.3s ease;
+}
+
+#yesBtn { background: #28a745; position: static; margin-right: 20px; }
+#noBtn { background: #dc3545; }
+
+#message {
+  margin-top: 30px;
+  font-size: 2rem;
+  display: none;
+}
+
+/* Floating Hearts */
+.heart {
+  position: absolute;
+  bottom: -20px;
+  font-size: 20px;
+  animation: floatUp linear infinite;
+}
+@keyframes floatUp { to { transform: translateY(-110vh); opacity: 0; } }
+
+/* Fireworks */
+.firework {
+  position: absolute;
+  width: 5px;
+  height: 5px;
+  background: yellow;
+  border-radius: 50%;
+  animation: explode 1s ease-out forwards;
+}
+@keyframes explode {
+  to {
+    transform: translate(var(--x), var(--y));
+    opacity: 0;
+  }
+}
+
+/* Love Letter Popup */
+#letter {
+  position: fixed;
+  background: white;
+  color: #333;
+  padding: 20px;
+  border-radius: 10px;
+  width: 300px;
+  text-align: center;
+  display: none;
+  z-index: 20;
+}
+
+/* Slideshow */
+#slideshow {
+  margin-top: 20px;
+  width: 200px;
+  height: 200px;
+  border-radius: 10px;
+  display: none;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+  <h1>Will you be my Valentine? 💖</h1>
+  <button id="yesBtn">Yes 💘</button>
+  <button id="noBtn">No 🙈</button>
+  <div id="message"></div>
+  <img id="slideshow" src="">
+</div>
+
+<div id="letter">
+  <h3>💌 A Little Note</h3>
+  <p>You just made my world brighter. Thank you for being you. ❤️</p>
+</div>
+
+<audio autoplay loop>
+  <source src="https://www.bensound.com/bensound-music/bensound-love.mp3" type="audio/mp3">
+</audio>
+
+<script>
+const noBtn = document.getElementById("noBtn");
+const yesBtn = document.getElementById("yesBtn");
+const message = document.getElementById("message");
+const letter = document.getElementById("letter");
+const slideshow = document.getElementById("slideshow");
+
+const photos = [
+  "https://i.imgur.com/4AiXzf8.jpeg",
+  "https://i.imgur.com/jxWqIBf.jpeg",
+  "https://i.imgur.com/8Km9tLL.jpeg"
+];
+let photoIndex = 0;
+
+function moveNoButton() {
+  const maxX = window.innerWidth - 100;
+  const maxY = window.innerHeight - 100;
+  noBtn.style.left = Math.random() * maxX + "px";
+  noBtn.style.top = Math.random() * maxY + "px";
+}
+noBtn.addEventListener("mouseover", moveNoButton);
+noBtn.addEventListener("click", moveNoButton);
+
+function typeText(text, i = 0) {
+  if (i < text.length) {
+    message.innerHTML += text.charAt(i);
+    setTimeout(() => typeText(text, i + 1), 50);
+  }
+}
+
+yesBtn.addEventListener("click", () => {
+  yesBtn.style.display = "none";
+  noBtn.style.display = "none";
+  message.style.display = "block";
+  typeText("YAYYY!!! I knew it, Riddhiman 😍💞");
+
+  letter.style.display = "block";
+  slideshow.style.display = "block";
+  startSlideshow();
+  startFireworks();
+});
+
+function createHeart() {
+  const heart = document.createElement("div");
+  heart.className = "heart";
+  heart.innerHTML = "💖";
+  heart.style.left = Math.random() * 100 + "vw";
+  heart.style.animationDuration = (Math.random() * 3 + 2) + "s";
+  heart.style.fontSize = (Math.random() * 20 + 10) + "px";
+  document.body.appendChild(heart);
+  setTimeout(() => heart.remove(), 5000);
+}
+setInterval(createHeart, 300);
+
+function startFireworks() {
+  for (let i = 0; i < 30; i++) {
+    const fw = document.createElement("div");
+    fw.className = "firework";
+    fw.style.left = "50%";
+    fw.style.top = "50%";
+    fw.style.setProperty("--x", (Math.random() - 0.5) * 400 + "px");
+    fw.style.setProperty("--y", (Math.random() - 0.5) * 400 + "px");
+    document.body.appendChild(fw);
+    setTimeout(() => fw.remove(), 1000);
+  }
+}
+
+function startSlideshow() {
+  slideshow.src = photos[photoIndex];
+  setInterval(() => {
+    photoIndex = (photoIndex + 1) % photos.length;
+    slideshow.src = photos[photoIndex];
+  }, 2000);
+}
+</script>
+
+</body>
+</html>
+Add valentine website
